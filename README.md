@@ -2,21 +2,21 @@
 Cafe Nexus - Gruppe ROFL
 
 
-Forslag til endelig kravspec - server:
-S1: Server skal kunne validere loginforsøg som inkluderer et hashed password.
-S2: Serveren skal udstille et interface, som gør det muligt at oprette/slette/redigere en bruger.
-S3: Serveren skal udstille et interface, som gør det muligt at oprette en kommentar, et opslag eller en begivenhed.
-S4: Serveren skal udstille et interface, som lister alle brugere, opslag eller begivenheder i systemet.
-S5: Serveren skal udstille et interface, som lister specifikke brugere, opslag eller begivenheder i systemet.
-S6: Serveren skal udstille et API, som gør det nemt at udarbejde klienter der kan trække på serverens funktionalitet. API’et skal dække følgende funktioner:
-En bruger skal kunne logge ind/ud.
-En bruger skal kunne slette sin konto.
-En gæst skal kunne oprette sig som bruger.
-En bruger skal kunne opdatere egne brugeroplysninger.
-En bruger skal kunne oprette en kommentar.
-En bruger skal kunne oprette et opslag.
-En bruger skal kunne oprette en begivenhed.
-En bruger skal kunne finde informationer om den valgte bruger eller begivenhed
+Forslag til endelig kravspec - server:/n
+S1: Server skal kunne validere loginforsøg som inkluderer et hashed password./n
+S2: Serveren skal udstille et interface, som gør det muligt at oprette/slette/redigere en bruger./n
+S3: Serveren skal udstille et interface, som gør det muligt at oprette en kommentar, et opslag eller en begivenhed./n
+S4: Serveren skal udstille et interface, som lister alle brugere, opslag eller begivenheder i systemet./n
+S5: Serveren skal udstille et interface, som lister specifikke brugere, opslag eller begivenheder i systemet./n
+S6: Serveren skal udstille et API, som gør det nemt at udarbejde klienter der kan trække på serverens funktionalitet. API’et skal dække følgende funktioner:/n
+En bruger skal kunne logge ind/ud./n
+En bruger skal kunne slette sin konto./n
+En gæst skal kunne oprette sig som bruger./n
+En bruger skal kunne opdatere egne brugeroplysninger./n
+En bruger skal kunne oprette en kommentar./n
+En bruger skal kunne oprette et opslag./n
+En bruger skal kunne oprette en begivenhed./n
+En bruger skal kunne finde informationer om den valgte bruger eller begivenhed/n
 
 Forslag til endelig kravspec - klient:
 K1: En gæst skal kunne oprette sig som bruger.
