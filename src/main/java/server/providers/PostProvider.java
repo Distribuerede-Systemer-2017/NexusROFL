@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import java.util.ArrayList;
 
@@ -111,6 +112,41 @@ public class PostProvider {
 
         //Returning Post id
         return post.getId();
+    }
+
+
+    //Creating method for getting one post
+    public ArrayList<Post> getOnePost() {
+     ArrayList<Post> onePost = new ArrayList<>(); //Creating object of ArrayList
+
+        ResultSet resultSet = null;
+
+        //Creating prepared statement for getting one post
+        PreparedStatement getOnePostStatement = null;
+        try {
+            getOnePostStatement = DBManager.getConnection().prepareStatement("SELECT FROM posts WHERE posts = post_id");
+
+            resultSet = getOnePostStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Post post = new Post(
+                    resultSet.getInt("post_id"),
+                    resultSet.getTimestamp("created"),
+                    new User(resultSet.getInt("user_id")), //Creating an owner to the post
+                    resultSet.getString("content"),
+                    new Event(resultSet.getInt("event_id")), //Creating an event to the post
+                    new Post(resultSet.getInt("parent_id")) //Creating an parent to the post
+                );
+
+            } //Closing query
+            resultSet.close();
+            getOnePostStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } //Returning one post
+        return onePost;
+
     }
 
 }
