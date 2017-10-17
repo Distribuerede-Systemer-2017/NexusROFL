@@ -10,6 +10,9 @@ import javax.ws.rs.Path;
 import java.util.ArrayList;
 
 
+import com.google.gson.JsonObject;
+import server.controllers.ContentController;
+
 import server.models.Post;
 import server.providers.PostProvider;
 
@@ -21,12 +24,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
+
 /**
  * Created by Filip on 10-10-2017.
  */
 @Path("/posts")
 public class PostEndpoint {
-
+    ContentController contentController = new ContentController();
 
     /*
     This method returns all posts. To do so, the method creates an object of the PostProvider class
@@ -44,27 +48,59 @@ public class PostEndpoint {
 
 
     @POST
-    @Consumes("application/x-www-form-urlencoded")
-    public Response createPostMethod(
-            @FormParam("owner") int owner,
-            @FormParam("content") String content,
-            @DefaultValue("0") @FormParam("event") int event,
-            @DefaultValue("0") @FormParam("parent") int parent) {
+    public Response createPostMethod (String jsonPost) {
+
+        JsonObject postData = new Gson().fromJson(jsonPost, JsonObject.class);
+
+        int localOwner;
+        String localContent;
+        int localEvent = 0;
+        int localParent = 0;
+
+        localOwner = postData.get("owner").getAsInt();
+        localContent = postData.get("content").getAsString();
+
+
+        try {
+            localEvent = postData.get("event").getAsInt();
+        }
+        catch (NullPointerException e){
+            localEvent = 0;
+
+        }
+
+        try {
+            localParent = postData.get("parent").getAsInt();
+        }
+        catch (NullPointerException e2){
+            localParent = 0;
+        }
+
+        if (localEvent < 0 || localParent < 0 ){
+            throw new IllegalArgumentException("Event og Parent Id can't be less than 0");
+        }
+
+        if (localParent != 0){
+            localEvent = 0;
+        }
+
+
+        Post createdPost = new Post(localOwner, localContent, localEvent, localParent);
 
         PostProvider postProvider = new PostProvider();
 
-        Post post = new Post(owner, content, event, parent);
-
         try {
-            post.setId(postProvider.createPost(post));
-
+           postProvider.createPost(createdPost);
             return Response.status(201).type("text/plain").entity("Post created").build();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e){
+            System.out.println("TESTATA");
             e.printStackTrace();
             return Response.status(400).type("text/plain").entity("Could not create post").build();
         }
 
     }
+
 
     /** This method returns one specific post chosen by id. The method creates an object of the PostProvider class and inserts
      * this object in an ArrayList and also the variables from the Post model-package.
@@ -81,4 +117,5 @@ public class PostEndpoint {
 
         return Response.status(200).type("application/json").entity(new Gson().toJson(post)).build();
     }
+
 }
